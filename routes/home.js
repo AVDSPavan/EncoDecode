@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+
 const compressString = str =>{
 	let result=''
 	let n = str.length
@@ -18,17 +19,52 @@ const compressString = str =>{
 		}
 		
 	}
-	return result.split('').reverse().join('');
+	result=result.split('').reverse().join('')
+	let i=0
+	n=result.length;
+	let cryptedString=''
+	while(i<n){
+	if (122 >= result.charCodeAt(i))
+	{
+		if (result.charCodeAt(i)  >= 97 )
+		{
+			temp = String.fromCharCode(((result.charCodeAt(i) + (n-i) -97) % 26 + 26)%26+ 97 )
+		}
+		else{
+			temp=result[i]
+		}
+	}
+	cryptedString+=temp
+	i++;
+}
+	return cryptedString;
 }
 
 const decompressString = str =>{
-	str=str.split('').reverse().join('')
-	let result='',i=0
-	while(i<str.length-1){
+	let i=0,n=str.length;
+	let cryptedString=''
+	while(i<n){
+	if (122 >= str.charCodeAt(i))
+	{
+		if (str.charCodeAt(i)  >= 97 )
+		{
+			temp = String.fromCharCode(((str.charCodeAt(i) - (n-i) -97) % 26 + 26)%26+ 97 )
+		}
+		else{
+			temp=str[i]
+		}
+	}
+	cryptedString+=temp
+	i++;
+}
+	str=cryptedString.split('').reverse().join('')
+	let result=''
+	i=0
+	while(i<n-1){
 		if(Number.isInteger(parseInt(str[i+1]))){
 			let digits=0
 			let k=1
-			while(Number.isInteger(parseInt(str[i+k])) && i+k<str.length){
+			while(Number.isInteger(parseInt(str[i+k])) && i+k<n){
 				digits+=1
 				k++
 			}
@@ -42,8 +78,8 @@ const decompressString = str =>{
 		}
 		i++;
 	}
-	if(!Number.isInteger(parseInt(str[str.length-1]))){
-		result+=str[str.length-1]
+	if(!Number.isInteger(parseInt(str[n-1]))){
+		result+=str[n-1]
 	}
 	return result
 }

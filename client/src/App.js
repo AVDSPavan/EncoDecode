@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 export const App = () => {
 	//const [limit, setLimit] = useState(0);
-	const [data, setData] = useState("Result");
+	const [data, setData] = useState("");
 	const [body, setBody] = useState({
 		OriginalString: "",
 		cryptFunction: "0",
@@ -67,10 +67,10 @@ export const App = () => {
 									required
 								/>
 								<div
-									className="container form-control-borderless mt-3"
+									className="form-control-borderless mt-3"
 									style={{ backgroundColor: "black", color: "white" }}>
 									<div className="row justify-content-around">
-									<div className="col-sm-4">
+									<div className="col-sm-5">
 										<input
 											type="radio"
 											value="0"
@@ -78,9 +78,9 @@ export const App = () => {
 											checked={body.cryptFunction === "0"}
 											onChange={(e) => onValueChange(e)}
 										/>{" "}
-										Encrypt
+										Compress
 									</div>
-									<div className="col-sm-4">
+									<div className="col-sm-5">
 										<input
 											type="radio"
 											value="1"
@@ -88,7 +88,7 @@ export const App = () => {
 											checked={body.cryptFunction === "1"}
 											onChange={(e) => onValueChange(e)}
 										/>{" "}
-										Decrypt
+										Decompress
 									</div>
 								</div>
 								</div>
@@ -103,6 +103,11 @@ export const App = () => {
 							{/* <p className="text-info">Result:</p> */}
 							<div className="text-success" style={{backgroundColor:"white", wordWrap: "break-word",fontSize:"140%",borderRadius:"3px"}}>
 							{data}
+							</div>
+							<br/>
+							<div className="row justify-content-around" style={{color:"yellow"}}>
+						<p className="col-sm-5 text">I/p Count: {body.OriginalString.length}</p>
+						<p className="col-sm-5 text">O/p Count:{data.length}</p>
 							</div>
 						</div>
 					</div>
