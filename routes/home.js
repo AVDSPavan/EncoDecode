@@ -1,75 +1,62 @@
 const express = require("express");
 const router = express.Router();
 
-router.post("/",(req,res)=>{
+const compressString = str =>{
+	let result=''
+	let n = str.length
+	for(let i=0;i<n;i++){
+		let count=1
+		while (i<n-1 && str[i]===str[i+1]){
+			count++;
+			i++;
+		}
+		if (count>1){
+			result=result+str[i]+count.toString();
+		}
+		else{
+			result=result+str[i];
+		}
+		
+	}
+	return result.split('').reverse().join('');
+}
+
+const decompressString = str =>{
+	str=str.split('').reverse().join('')
+	let result='',i=0
+	while(i<str.length-1){
+		if(Number.isInteger(parseInt(str[i+1]))){
+			let digits=0
+			let k=1
+			while(Number.isInteger(parseInt(str[i+k])) && i+k<str.length){
+				digits+=1
+				k++
+			}
+			for(let j=0;j<parseInt(str.substring(i+1,i+1+digits));j++){
+				result=result+str[i]
+			}
+			i=i+1;
+		}
+		else{
+			result+=str[i]
+		}
+		i++;
+	}
+	if(!Number.isInteger(parseInt(str[str.length-1]))){
+		result+=str[str.length-1]
+	}
+	return result
+}
+
+router.post("/", (req, res) => {
 	let originalString = req.body.name;
 	const check = req.body.check;
-	//.reverse().join('');
-let cryptedString ='';
-	const n=originalString.length
-	if(check === 0){
-		let i=0;
-		while(i<n){
-			let temp;
-			if(57 >= originalString.charCodeAt(i))
-			{
-				if(originalString.charCodeAt(i) >= 48)
-				{
-					//console.log('num encry');
-				temp = String.fromCharCode(((originalString.charCodeAt(i) + (n-i) -48) % 10+10)%10+48 )
-			}
-			else{
-				//console.log('else')
-				temp=originalString[i]
-			}
-		}
-			else if (122 >= originalString.charCodeAt(i))
-			{ 
-				if (originalString.charCodeAt(i)  >= 97 )
-				{
-					temp = String.fromCharCode(((originalString.charCodeAt(i) + (n-i) -97) % 26 + 26)%26+ 97 )
-					//console.log('encry '+temp)
-				}
-				else{
-					//console.log('else')
-					temp=originalString[i]
-				}
-			}
-			
-			cryptedString+=temp
-			i++;
-		}
+	if (check === 0) {
+		return res.json(compressString(originalString));
+	} else {
+		
+		return res.json(decompressString(originalString));
 	}
-	else{
-		let i=0;
-		while(i<n){
-			let temp;
-			if(57 >= originalString.charCodeAt(i))
-			{
-				if(originalString.charCodeAt(i) >= 48)
-				{
-				//console.log('num decry');
-				temp = String.fromCharCode(((originalString.charCodeAt(i) - (n-i) -48) % 10+10)%10 +48 )
-			}}
-			else if (122 >= originalString.charCodeAt(i))
-			{ 
-				if (originalString.charCodeAt(i)  >= 97 )
-				{
-					
-					temp = String.fromCharCode(((originalString.charCodeAt(i) - (n-i) -97) % 26 + 26)%26 + 97 )
-					//console.log('decrypting ' +originalString.charCodeAt(i)+ ' to '+temp)
-				}
-			}
-			else{
-				//console.log('decry else')
-				temp=originalString[i]
-			}
-			cryptedString+=temp
-			i++;
-		}
-	}
-	return res.json(cryptedString);
 });
-
 
 module.exports = router;
