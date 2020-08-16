@@ -17,7 +17,12 @@ let cryptedString ='';
 				{
 					//console.log('num encry');
 				temp = String.fromCharCode(((originalString.charCodeAt(i) + (n-i) -48) % 10+10)%10+48 )
-			}}
+			}
+			else{
+				//console.log('else')
+				temp=originalString[i]
+			}
+		}
 			else if (122 >= originalString.charCodeAt(i))
 			{ 
 				if (originalString.charCodeAt(i)  >= 97 )
@@ -25,10 +30,12 @@ let cryptedString ='';
 					temp = String.fromCharCode(((originalString.charCodeAt(i) + (n-i) -97) % 26 + 26)%26+ 97 )
 					//console.log('encry '+temp)
 				}
+				else{
+					//console.log('else')
+					temp=originalString[i]
+				}
 			}
-			else{
-				//console.log('else')
-			}
+			
 			cryptedString+=temp
 			i++;
 		}
@@ -55,6 +62,7 @@ let cryptedString ='';
 			}
 			else{
 				//console.log('decry else')
+				temp=originalString[i]
 			}
 			cryptedString+=temp
 			i++;
