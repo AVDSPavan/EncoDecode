@@ -44,7 +44,7 @@ export const App = () => {
 					fontSize: "230%",
 					fontFamily: "sans-serif",
 				}}>
-				Cryptogram
+				EncoDecode
 			</p>
 			<br />
 			<br />
@@ -70,7 +70,7 @@ export const App = () => {
 									className="form-control-borderless mt-3"
 									style={{ backgroundColor: "black", color: "white" }}>
 									<div className="row justify-content-around">
-										<div className="col-sm-5">
+										<div className="col-sm-4">
 											<input
 												type="radio"
 												value="0"
@@ -80,7 +80,7 @@ export const App = () => {
 											/>{" "}
 											Encode
 										</div>
-										<div className="col-sm-5">
+										<div className="col-sm-4">
 											<input
 												type="radio"
 												value="1"
