@@ -70,44 +70,55 @@ export const App = () => {
 									className="form-control-borderless mt-3"
 									style={{ backgroundColor: "black", color: "white" }}>
 									<div className="row justify-content-around">
-									<div className="col-sm-5">
-										<input
-											type="radio"
-											value="0"
-											name="crypto"
-											checked={body.cryptFunction === "0"}
-											onChange={(e) => onValueChange(e)}
-										/>{" "}
-										Compress
+										<div className="col-sm-5">
+											<input
+												type="radio"
+												value="0"
+												name="crypto"
+												checked={body.cryptFunction === "0"}
+												onChange={(e) => onValueChange(e)}
+											/>{" "}
+											Encode
+										</div>
+										<div className="col-sm-5">
+											<input
+												type="radio"
+												value="1"
+												name="crypto"
+												checked={body.cryptFunction === "1"}
+												onChange={(e) => onValueChange(e)}
+											/>{" "}
+											Decode
+										</div>
 									</div>
-									<div className="col-sm-5">
-										<input
-											type="radio"
-											value="1"
-											name="crypto"
-											checked={body.cryptFunction === "1"}
-											onChange={(e) => onValueChange(e)}
-										/>{" "}
-										Decompress
-									</div>
-								</div>
 								</div>
 								<button className="btn-success form-control mt-3" type="submit">
 									Submit
 								</button>
-								<br/>
-								<br/>
+								<br />
+								<br />
 							</div>
 						</form>
 						<div>
 							{/* <p className="text-info">Result:</p> */}
-							<div className="text-success" style={{backgroundColor:"white", wordWrap: "break-word",fontSize:"140%",borderRadius:"3px"}}>
-							{data}
+							<div
+								className="text-success"
+								style={{
+									backgroundColor: "white",
+									wordWrap: "break-word",
+									fontSize: "140%",
+									borderRadius: "3px",
+								}}>
+								{data}
 							</div>
-							<br/>
-							<div className="row justify-content-around" style={{color:"yellow"}}>
-						<p className="col-sm-5 text">I/p Count: {body.OriginalString.length}</p>
-						<p className="col-sm-5 text">O/p Count:{data.length}</p>
+							<br />
+							<div
+								className="row justify-content-around"
+								style={{ color: "yellow" }}>
+								<p className="col-sm-5 text">
+									I/p Count: {body.OriginalString.length}
+								</p>
+								<p className="col-sm-5 text">O/p Count:{data.length}</p>
 							</div>
 						</div>
 					</div>
