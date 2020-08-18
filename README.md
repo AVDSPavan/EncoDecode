@@ -1,8 +1,8 @@
-# Cryptogram
+# EncoDecode
 
-It is a simple web application useful to encrypt and decrypt a string. It is developed using React js in frontend, Node js in backend and Express framework for server. It is deployed to heroku and can accessed through the link given below.
+It is a simple web application useful to encode and decode a string by compressing their character count. It is developed using React js in frontend, Node js in backend and Express framework for server. It is deployed to heroku and can accessed through the link given below.
 
-https://cryptogram9.herokuapp.com/
+http://encodecode.herokuapp.com/
 
 ## Technologies used in this project:
 
@@ -21,18 +21,157 @@ When input is given and submit button is clicked, the frontend will fire a POST 
 
 ### Backend
 
-In backend, the string is either encrypted or decrypted according to the function that was choosen from frontend. The basic idea of implementing the functions is based on caeser-cipher encryption and decryption algorithms. To know more about caeser cipher <a href="https://www.geeksforgeeks.org/caesar-cipher-in-cryptography/">click here</a>
+In backend, the string is either encoded or decoded according to the function that was choosen from frontend.
 
-<img src="https://www.geeksforgeeks.org/wp-content/ql-cache/quicklatex.com-c8ec2929f6200eac3e62ce0606b45a7d_l3.svg" ></img>
 
-<img src="https://www.geeksforgeeks.org/wp-content/ql-cache/quicklatex.com-2fa18340a62f44efc5fc32cb361a047e_l3.svg"><img>
+#### Encoding algo
 
-A modified version of caeser-cipher algorithm is used in this project. To make it more secure, ascii value of each letter is combined with total number of letters in the string and subtracted with letter position in the string. It helps to not output same encrypted letter for repetitive letters.
+Take ASCII decimal values and convert into binary, taken only 7 bits out of 8 ,as 7 bits will be enough to character ascii values upto 127 i.e (2^7). 
 
-Since the modulo(%) operator in javascript can even return negative values, I did modified it by adding the same number as modulo.
+Step 1: Convert an input byte stream into a group of 6 bytes with .
+If there are less than (6 or multiple of 6) bytes, at the end, pad additional empty bytes.
+
+Step 2. Divide this group into multiple of 7 each chunk of 6 bits. 
+
+Step 3. If a chunk has both actual bits and empty bits, replace the empty bits in that chunk with 0’s.
+
+Step 4. Convert each 6 bits chunk to its decimal value
+
+Step 5. In the base-127 symbol chart, map each decimal value to its corresponding character.
+
+#### Decoding algo
+
+Take ASCII decimal values and convert into binary as 8 bits for each character.(Pad '0' to the left if less than 8)
+
+Step 1: Concatenate all the resulted 8 bit binary ascii values.
+
+Step 2: Take exactly 6 bits intervals from the binary array and add it to a list
+
+Step 3: Now, convert the 6 bit binary chunk to decimal value and map it to the base list to get the corresponding characters
+
+Step 4: Return the resulted characters by joining as string
 
 Finally, the backend returns the encrypted or decrypted string to the React frontend and that will be displayed.
 
 ### Responsiveness
 
 I had used bootstrap media queries in this project and so, the application is responsive in both mobile and computer screens :+1:.
+
+
+### Testcases
+
+## Note:
+Not able to figure out to map only alphanumeric characters as output. So, Special characters will also result in the encoded string.
+
+#### T1
+
+Input  : helloworld
+
+Output : BË9c,0
+
+#### T2
+
+Input  : smartworld
+
+Output : HÀMc,0
+
+#### T3
+
+Input  : encodecode
+
+Output : Ð@@
+
+
+
+## Tried hard based on hints but not able to finish it...
+
+### Algo :  
+
+Base 26 to Base 10 and then Base 10 to Base 52 for encode
+
+
+Base 52 to Base 10 and then Base 10 to Base 26 for decode
+
+
+## Encode
+
+//Base 26 to base 10
+
+const encode = (str) => {
+	
+  let len = str.length;
+	
+  let result = "";
+	
+  result += str.charCodeAt(len - 1) - 97;
+	
+  for (let i = len - 2; i >= 0; i--){
+		
+    result = result * 26 + (str.charCodeAt(i) - 97);}
+
+  console.log(result);
+	
+  return encode1(result);
+
+};
+
+//Base 10 to base 52
+
+const encode1 = (str) => {
+	
+  let result = "";
+	
+  while (str > 0) {
+		
+    let r = str % 52;
+		
+    result += s1[r];
+		
+    str = Math.floor(str / 52);}
+    
+	return result.split("").reverse().join("");
+
+};
+
+
+## Decode
+
+//Base 56 to Base 10
+
+const decode = (str) => {
+	
+  let len = str.length;
+	
+  let result = s1.indexOf(str[len - 1]);
+	
+  for (let i = len - 2; i >= 0; i--) {
+		
+    result = result * 52 + s1.indexOf(str[i]);}
+    
+	console.log(result);
+	
+  return decode1(result);
+
+};
+
+
+//Base 10 to Base 26
+
+const decode1 = (str) => {
+	
+  let result = "";
+	
+  while (str > 0) {
+		
+    let r = str % 26;
+		
+    result += s1[r];
+		
+    str = Math.floor(str / 26);
+	
+  }
+	
+  return result.split("").reverse().join("");
+
+};
+
