@@ -26,7 +26,7 @@ In backend, the string is either encoded or decoded according to the function th
 
 #### Encoding algo
 
-Take ASCII decimal values and convert into binary, taken only 6 bits out of 8 ,as 6 bits will be enough to character ascii values upto 64 characters (our requirement a-zA-Z which are 52)
+Take ASCII decimal values and convert into binary, taken only 6 bits out of 8 ,as 6 bits will be enough to character values upto 64 characters (our requirement a-zA-Z which are 52)
 
 Step 1: Convert an input byte stream into a group of 6 bytes with .
 If there are less than (6 or multiple of 6) bytes, at the end, pad additional empty bytes.
