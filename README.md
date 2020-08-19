@@ -26,18 +26,18 @@ In backend, the string is either encoded or decoded according to the function th
 
 #### Encoding algo
 
-Take ASCII decimal values and convert into binary, taken only 7 bits out of 8 ,as 7 bits will be enough to character ascii values upto 127 i.e (2^7). 
+Take ASCII decimal values and convert into binary, taken only 6 bits out of 8 ,as 6 bits will be enough to character ascii values upto 64 characters (our requirement a-zA-Z which are 52)
 
 Step 1: Convert an input byte stream into a group of 6 bytes with .
 If there are less than (6 or multiple of 6) bytes, at the end, pad additional empty bytes.
 
-Step 2. Divide this group into multiple of 7 each chunk of 6 bits. 
+Step 2. Divide this group into multiple of 8 each chunk of 6 bits. 
 
 Step 3. If a chunk has both actual bits and empty bits, replace the empty bits in that chunk with 0’s.
 
 Step 4. Convert each 6 bits chunk to its decimal value
 
-Step 5. In the base-127 symbol chart, map each decimal value to its corresponding character.
+Step 5. In the base-62 symbol chart, map each decimal value to its corresponding character.
 
 #### Decoding algo
 
@@ -83,7 +83,7 @@ Output : Ð@@
 
 
 
-## Tried hard based on hints but not able to finish it...
+## Tried hard based on hints and got the below algorithm..
 
 ### Algo :  
 
